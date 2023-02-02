@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+
+spec:
+  # конфиругация для репликации подов
+  # в данном случае мы говорим что хотим делать реплики только 
+  # для подос c label flask-app 
+  replicas: 5
+  selector:
+    matchLabels:
+      app: flask-app
+  # конфигурация для каждого контейнера в Pod
+  template:
+    metadata:
+      # указываем label для пода равный flask-app 
+      labels:
+        app: flask-app
+    # подробная спецификация для каждого пода
+    spec:
+      containers:
+        - name: flask-app-container
+          # указываем image который мы хотим использовать
+          image: flask-app-testing
+          # означает что кубер не полезет его искать вовне, 
+          # а будет искать только локально
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+              protocol: TCP
