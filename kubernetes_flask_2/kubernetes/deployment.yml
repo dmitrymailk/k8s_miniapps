@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # название нашего deployment
+  name: python-webapp
+  labels:
+    app: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      # даем нашим подам лейбл с названием web
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: webapp
+          # данный образ мы должны были собрать локально
+          image: webapp:1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+              protocol: TCP
