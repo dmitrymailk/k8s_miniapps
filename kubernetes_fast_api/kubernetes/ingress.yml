@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: foo
+
+spec:
+  rules:
+    - host: тут нужен домен чтобы все работало и было доступно из интернета
+      http:
+        paths:
+          - path: /
+            pathType: Exact
+            backend:
+              service:
+                name: fast-api-service
+                port:
+                  number: 80
